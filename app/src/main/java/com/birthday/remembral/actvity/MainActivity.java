@@ -1,7 +1,13 @@
 package com.birthday.remembral.actvity;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.birthday.remembral.R;
 import com.birthday.remembral.flurry.FlurryImpl;
@@ -19,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
         // log using logger library
         LoggerImpl.initializeAndroidLogAdapter(true);
+
+        Button textView = (Button)findViewById(R.id.textview);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
