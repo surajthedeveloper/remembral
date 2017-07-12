@@ -26,7 +26,7 @@ public class FlurryImpl {
     * call this method in onCreate method of Application class
     * */
 
-    public static void flurryInitializationInApplication(Context context) {
+    public static void flurryInitializationInApplication(Context context,String flurryKey) {
         new FlurryAgent.Builder()
                 .withLogEnabled(true)
                 .withCaptureUncaughtExceptions(true)
@@ -39,7 +39,7 @@ public class FlurryImpl {
                                 + new Timestamp(System.currentTimeMillis()));
                     }
                 })
-                .build(context, "89C3YN5MCSHGYN99KRTQ");
+                .build(context, flurryKey);
     }
 
     /*

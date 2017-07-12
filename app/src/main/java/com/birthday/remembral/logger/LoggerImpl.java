@@ -15,8 +15,6 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 * */
 public class LoggerImpl {
 
-    private static final String CUSTOM_TAG_FOR_LOGGER = "REMEMBRAL";
-
     private LoggerImpl() {
         //sonar
     }
@@ -43,7 +41,8 @@ public class LoggerImpl {
     * isLoggable -> true if you want to print package info logs in logcat, false otherwise
     * */
     public static void initializeAndroidLogAdapterWithFormatStrategy(final boolean showThreadInfo,
-                                                                     final boolean isLoggable) {
+                                                                     final boolean isLoggable,
+                                                                     final String customTagForLogger) {
         clearLoggerAdapter();
 
         final FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
@@ -51,7 +50,7 @@ public class LoggerImpl {
                 .methodCount(2)         // (Optional) How many method line to show. Default 2
                 .methodOffset(3)        // (Optional) Skips some method invokes in stack trace. Default 5
                 //.logStrategy(new LogcatLogStrategy()) // (Optional) Changes the log strategy to print out. Default LogCat
-                .tag(CUSTOM_TAG_FOR_LOGGER) // (Optional) Custom tag for each log. Default PRETTY_LOGGER
+                .tag(customTagForLogger) // (Optional) Custom tag for each log. Default PRETTY_LOGGER
                 .build();
 
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
@@ -65,11 +64,11 @@ public class LoggerImpl {
     *       custom FormatStrategy
     *  creates a folder in sdcard as logger and ceates a file and appends logger Data
     * */
-    public static void initializeAndroidLogAdapterWithDiskAdapter() {
+    public static void initializeAndroidLogAdapterWithDiskAdapter(final String customTagForLogger) {
         clearLoggerAdapter();
 
         final FormatStrategy formatStrategy = CsvFormatStrategy.newBuilder()
-                .tag(CUSTOM_TAG_FOR_LOGGER)
+                .tag(customTagForLogger)
                 .build();
 
         Logger.addLogAdapter(new DiskLogAdapter(formatStrategy));

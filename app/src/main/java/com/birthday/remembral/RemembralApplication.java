@@ -16,7 +16,8 @@ public class RemembralApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-        FlurryImpl.flurryInitializationInApplication(this);
+        //Flurry api key 89C3YN5MCSHGYN99KRTQ
+        FlurryImpl.flurryInitializationInApplication(this,"89C3YN5MCSHGYN99KRTQ");
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

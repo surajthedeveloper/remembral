@@ -1,22 +1,24 @@
 package com.birthday.remembral.actvity;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.birthday.remembral.R;
 import com.birthday.remembral.flurry.FlurryImpl;
 import com.birthday.remembral.logger.LoggerImpl;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,37 @@ public class MainActivity extends AppCompatActivity {
         // log using logger library
         LoggerImpl.initializeAndroidLogAdapter(true);
 
-        Button textView = (Button)findViewById(R.id.textview);
-        textView.setOnClickListener(new View.OnClickListener() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
-            public void onClick(View view) {
+            public void onSuccess(LoginResult loginResult) {
+                if (loginResult!=null){
+                    loginResult.getAccessToken().getUserId();;
+                }
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
 
             }
         });
+
+        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
